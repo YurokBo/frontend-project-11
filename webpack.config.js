@@ -43,7 +43,7 @@ export default {
       // Learn more about loaders from https://webpack.js.org/loaders/
     ],
   },
-  entry: './src/index.js',
+  entry: './src/scripts/index.js',
   output: {
     clean: true,
   },
