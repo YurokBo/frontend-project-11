@@ -4,7 +4,7 @@ import { renderError, renderSuccess } from './renders.js';
 export const render = (state, elements) => (path) => {
   const pathList = {
     'form.links': () => {},
-    'form.isValid': renderSuccess,
+    'form.success': renderSuccess,
     'form.error': renderError,
   };
 
