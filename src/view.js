@@ -1,17 +1,17 @@
 import onChange from 'on-change';
 import { renderError, renderSuccess } from './renders.js';
 
-export const render = (state, elements) => (path) => {
-  const pathList = {
-    'form.links': () => {},
-    'form.success': renderSuccess,
-    'form.error': renderError,
-  };
+export default (elements, state, i18n) => onChange(state, (path) => {
+  switch (path) {
+    case 'form.error':
+      renderError(elements, state, i18n);
+      break;
 
-  // if (Object.hasOwn(pathList, path)) {
-  //   throw new Error(`Unknown path ${path}`);
-  // }
+    case 'form.isValid':
+      renderSuccess(elements, state, i18n);
+      break;
 
-  return pathList[path](state, elements);
-};
-export default (state, elements) => onChange(state, render(state, elements));
+    default:
+      break;
+  }
+});
