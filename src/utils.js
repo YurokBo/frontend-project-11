@@ -5,15 +5,15 @@ export const validate = (currentLink, links) => {
   return scheme.validate(currentLink);
 };
 
-export const feedHandler = (doc) => {
-  console.log('feedHandler', doc);
+export const feedHandler = (document) => {
+  console.log('feedHandler', document);
   const feed = {
-    title: doc.querySelector('title').textContent,
-    description: doc.querySelector('description').textContent,
-    link: doc.querySelector('link').textContent,
+    title: document.querySelector('title').textContent,
+    description: document.querySelector('description').textContent,
+    link: document.querySelector('link').textContent,
   };
 
-  const feedItems = doc.querySelectorAll('item');
+  const feedItems = document.querySelectorAll('item');
   const posts = [...feedItems].map((feedItem, index) => ({
     id: index,
     title: feedItem.querySelector('title').textContent,
