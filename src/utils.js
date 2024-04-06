@@ -6,7 +6,6 @@ export const validate = (currentLink, links) => {
 };
 
 export const feedHandler = (document) => {
-  console.log('feedHandler', document);
   const feed = {
     title: document.querySelector('title').textContent,
     description: document.querySelector('description').textContent,

@@ -9,5 +9,12 @@ export default {
       duplicatedUrl: 'RSS уже существует',
       networkError: 'Ошибка сети',
     },
+    posts: {
+      title: 'Посты',
+      button: 'Просмотр',
+    },
+    feeds: {
+      title: 'Фиды',
+    },
   },
 };

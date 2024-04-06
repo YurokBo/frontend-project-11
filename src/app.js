@@ -9,7 +9,7 @@ import {
 import { getRssRequest } from './api.js';
 
 export default async () => {
-  const defaultLanguage = 'en';
+  const defaultLanguage = 'ru';
   const i18n = i18next.createInstance();
   await i18n.init({
     lng: defaultLanguage,
@@ -64,11 +64,12 @@ export default async () => {
       .then((response) => {
         watchedState.form.links.push(currentUrl);
         const { feed, posts } = feedHandler(response);
-        watchedState.feeds = [...feed];
+        watchedState.feeds = feed;
         watchedState.posts = [...posts];
       })
       .catch((err) => {
         watchedState.form.error = err.message;
+        watchedState.form.links = [];
       });
   });
 };
