@@ -2,7 +2,11 @@ import i18next from 'i18next';
 import * as yup from 'yup';
 import view from './view.js';
 import resources from './locales/index.js';
-import { validate } from './utils.js';
+import {
+  validate,
+  feedHandler,
+} from './utils.js';
+import { getRssRequest } from './api.js';
 
 export default async () => {
   const defaultLanguage = 'en';
@@ -25,6 +29,12 @@ export default async () => {
       formStatus: 'filling',
       success: null,
     },
+    feeds: [],
+    posts: [],
+    modal: {
+      clickedPost: '',
+      clickedPostId: '',
+    },
   };
 
   const watchedState = view(elements, state, i18n);
@@ -45,10 +55,17 @@ export default async () => {
     const currentUrl = formData.get('url').trim();
 
     await validate(currentUrl, watchedState.form.links)
-      .then((data) => {
+      .then(() => {
         watchedState.form.isValid = true;
         watchedState.form.error = null;
-        watchedState.form.links.push(data);
+
+        return getRssRequest(currentUrl);
+      })
+      .then((response) => {
+        watchedState.form.links.push(currentUrl);
+        const { feed, posts } = feedHandler(response);
+        watchedState.feeds = [...feed];
+        watchedState.posts = [...posts];
       })
       .catch((err) => {
         watchedState.form.error = err.message;
