@@ -64,7 +64,7 @@ export const renderPosts = (elements, posts, i18n) => {
   elements.posts.append(card);
 };
 
-export const renderFeeds = (elements, feed, i18n) => {
+export const renderFeeds = (elements, feeds, i18n) => {
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
   const cardBody = document.createElement('div');
@@ -79,18 +79,20 @@ export const renderFeeds = (elements, feed, i18n) => {
   listGroup.classList.add('list-group', 'border-0', 'rounded-0');
   card.append(listGroup);
 
-  const listGroupItem = document.createElement('li');
-  listGroupItem.classList.add('list-group-item', 'border-0', 'border-end-0');
-  listGroup.append(listGroupItem);
+  feeds.forEach((feed) => {
+    const listGroupItem = document.createElement('li');
+    listGroupItem.classList.add('list-group-item', 'border-0', 'border-end-0');
+    listGroup.append(listGroupItem);
 
-  const feedTitle = document.createElement('h6');
-  feedTitle.classList.add('h6', 'm-0');
-  feedTitle.textContent = feed.title;
-  listGroupItem.append(feedTitle);
-  const feedText = document.createElement('p');
-  feedText.classList.add('m-0', 'small', 'text-black-50');
-  feedText.textContent = feed.description;
-  listGroupItem.append(feedText);
+    const feedTitle = document.createElement('h6');
+    feedTitle.classList.add('h6', 'm-0');
+    feedTitle.textContent = feed.title;
+    listGroupItem.append(feedTitle);
+    const feedText = document.createElement('p');
+    feedText.classList.add('m-0', 'small', 'text-black-50');
+    feedText.textContent = feed.description;
+    listGroupItem.append(feedText);
+  });
 
   elements.feeds.append(card);
 };

@@ -66,8 +66,8 @@ export default async () => {
       .then((response) => {
         watchedState.form.links.push(currentUrl);
         const { feed, posts } = response;
-        watchedState.feeds = feed;
-        watchedState.posts = [...posts];
+        watchedState.feeds = [...watchedState.feeds, feed];
+        watchedState.posts = [...watchedState.posts, ...posts];
         setTimeout(() => reloadRss(watchedState), 5000);
       })
       .catch((err) => {
