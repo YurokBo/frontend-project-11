@@ -4,7 +4,7 @@ import view from './view.js';
 import resources from './locales/index.js';
 import {
   validate,
-  feedHandler,
+  reloadRss,
 } from './utils.js';
 import { getRssRequest } from './api.js';
 
@@ -20,6 +20,8 @@ export default async () => {
     form: document.querySelector('.rss-form'),
     urlInput: document.querySelector('#url-input'),
     feedback: document.querySelector('.feedback'),
+    posts: document.querySelector('.posts'),
+    feeds: document.querySelector('.feeds'),
   };
   const state = {
     form: {
@@ -63,9 +65,10 @@ export default async () => {
       })
       .then((response) => {
         watchedState.form.links.push(currentUrl);
-        const { feed, posts } = feedHandler(response);
+        const { feed, posts } = response;
         watchedState.feeds = feed;
         watchedState.posts = [...posts];
+        setTimeout(() => reloadRss(watchedState), 5000);
       })
       .catch((err) => {
         watchedState.form.error = err.message;

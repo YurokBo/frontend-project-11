@@ -16,10 +16,10 @@ export const renderSuccess = (elements, state, i18n) => {
   state.form.isValid = false;
 };
 
-export const renderPosts = (posts, i18n) => {
+export const renderPosts = (elements, posts, i18n) => {
+  elements.posts.innerHTML = '';
   const { t } = i18n;
 
-  const container = document.querySelector('.posts');
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
   const cardBody = document.createElement('div');
@@ -27,19 +27,26 @@ export const renderPosts = (posts, i18n) => {
   const cardTitle = document.createElement('h4');
   cardTitle.classList.add('card-title', 'h4');
   cardTitle.textContent = t('posts.title');
+  cardBody.append(cardTitle);
+  card.append(cardBody);
 
   const listGroup = document.createElement('ul');
   listGroup.classList.add('list-group', 'border-0', 'rounded-0');
+  card.append(listGroup);
 
   posts.forEach((post) => {
     const listGroupItem = document.createElement('li');
     listGroupItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
 
     const link = document.createElement('a');
+    listGroupItem.append(link);
+
     link.classList.add('fw-bold');
     link.setAttribute('target', 'blank');
 
     const button = document.createElement('button');
+    listGroupItem.append(button);
+
     button.classList.add('btn', 'btn-outline-primary', 'btn-sm');
     button.setAttribute('type', 'button');
     button.setAttribute('data-bs-toggle', 'modal');
@@ -50,19 +57,14 @@ export const renderPosts = (posts, i18n) => {
     link.setAttribute('href', post.link);
     link.setAttribute('data-id', post.id);
     button.setAttribute('data-id', post.id);
-    listGroupItem.append(link);
-    listGroupItem.append(button);
-    listGroup.appendChild(listGroupItem);
+
+    listGroup.append(listGroupItem);
   });
 
-  cardBody.append(cardTitle);
-  card.append(cardBody);
-  card.append(listGroup);
-  container.appendChild(card);
+  elements.posts.append(card);
 };
 
-export const renderFeeds = (feed, i18n) => {
-  const container = document.querySelector('.feeds');
+export const renderFeeds = (elements, feed, i18n) => {
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
   const cardBody = document.createElement('div');
@@ -70,23 +72,25 @@ export const renderFeeds = (feed, i18n) => {
   const cardTitle = document.createElement('h4');
   cardTitle.classList.add('card-title', 'h4');
   cardTitle.textContent = i18n.t('feeds.title');
+  cardBody.append(cardTitle);
+  card.append(cardBody);
 
   const listGroup = document.createElement('ul');
   listGroup.classList.add('list-group', 'border-0', 'rounded-0');
+  card.append(listGroup);
+
   const listGroupItem = document.createElement('li');
   listGroupItem.classList.add('list-group-item', 'border-0', 'border-end-0');
+  listGroup.append(listGroupItem);
+
   const feedTitle = document.createElement('h6');
   feedTitle.classList.add('h6', 'm-0');
   feedTitle.textContent = feed.title;
+  listGroupItem.append(feedTitle);
   const feedText = document.createElement('p');
   feedText.classList.add('m-0', 'small', 'text-black-50');
   feedText.textContent = feed.description;
-
-  listGroupItem.append(feedTitle);
   listGroupItem.append(feedText);
-  listGroup.appendChild(listGroupItem);
-  cardBody.append(cardTitle);
-  card.append(cardBody);
-  card.append(listGroup);
-  container.appendChild(card);
+
+  elements.feeds.append(card);
 };

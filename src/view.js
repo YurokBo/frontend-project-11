@@ -17,11 +17,11 @@ export default (elements, state, i18n) => onChange(state, (path) => {
       break;
 
     case 'posts':
-      renderPosts(state.posts, i18n);
+      renderPosts(elements, state.posts, i18n);
       break;
 
     case 'feeds':
-      renderFeeds(state.feeds, i18n);
+      renderFeeds(elements, state.feeds, i18n);
       break;
 
     default:
