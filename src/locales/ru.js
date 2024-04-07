@@ -1,5 +1,15 @@
 export default {
   translation: {
+    main: {
+      title: 'RSS агрегатор',
+      text: 'Начните читать RSS сегодня! Это легко, это красиво.',
+      exampleLink: 'Пример: https://lorem-rss.hexlet.app/feed',
+    },
+    form: {
+      placeholder: 'ссылка RSS',
+      label: 'Ссылка RSS',
+      button: 'Добавить',
+    },
     success: {
       successLoaded: 'RSS успешно загружен',
     },

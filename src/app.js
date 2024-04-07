@@ -2,11 +2,8 @@ import i18next from 'i18next';
 import * as yup from 'yup';
 import view from './view.js';
 import resources from './locales/index.js';
-import {
-  validate,
-  reloadRss,
-} from './utils.js';
-import { getRssRequest } from './api.js';
+import { renderPage } from './renders.js';
+import { clickPostsHandler, formSubmitHandler } from './handlers.js';
 
 export default async () => {
   const defaultLanguage = 'ru';
@@ -17,9 +14,18 @@ export default async () => {
     resources,
   });
   const elements = {
-    form: document.querySelector('.rss-form'),
-    urlInput: document.querySelector('#url-input'),
-    feedback: document.querySelector('.feedback'),
+    main: {
+      title: document.querySelector('h1'),
+      text: document.querySelector('p.lead.big-title'),
+      exampleLink: document.querySelector('p.text-muted'),
+    },
+    form: {
+      form: document.querySelector('.rss-form'),
+      urlInput: document.querySelector('#url-input'),
+      feedback: document.querySelector('.feedback'),
+      button: document.querySelector('form button[type="submit"]'),
+      label: document.querySelector('form label[for="url-input"]'),
+    },
     posts: document.querySelector('.posts'),
     feeds: document.querySelector('.feeds'),
     modal: {
@@ -57,43 +63,9 @@ export default async () => {
     },
   });
 
-  elements.form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const currentUrl = formData.get('url').trim();
+  window.addEventListener('DOMContentLoaded', () => renderPage(elements, i18n));
 
-    await validate(currentUrl, watchedState.form.links)
-      .then(() => {
-        watchedState.form.isValid = true;
-        watchedState.form.error = null;
+  elements.form.form.addEventListener('submit', (event) => formSubmitHandler(event, watchedState));
 
-        return getRssRequest(currentUrl);
-      })
-      .then((response) => {
-        watchedState.form.links.push(currentUrl);
-        const { feed, posts } = response;
-        watchedState.feeds = [...watchedState.feeds, feed];
-        watchedState.posts = [...watchedState.posts, ...posts];
-        setTimeout(() => reloadRss(watchedState), 5000);
-      })
-      .catch((err) => {
-        watchedState.form.error = err.message;
-        watchedState.form.links = [];
-      });
-  });
-
-  elements.posts.addEventListener('click', (event) => {
-    const { target } = event;
-
-    if (target.nodeName === 'A') {
-      target.classList.replace('fw-bold', 'fw-normal');
-      target.classList.add('link-secondary');
-    }
-
-    if (target.nodeName === 'BUTTON') {
-      target.previousSibling.classList.replace('fw-bold', 'fw-normal');
-      target.previousSibling.classList.add('link-secondary');
-      watchedState.modal.postId = target.dataset.id;
-    }
-  });
+  elements.posts.addEventListener('click', (event) => clickPostsHandler(event, watchedState));
 };

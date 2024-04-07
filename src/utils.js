@@ -1,6 +1,6 @@
 import * as yup from 'yup';
-// eslint-disable-next-line import/no-cycle
-import { getRssRequest } from './api.js';
+import axios from 'axios';
+import parse from './parse.js';
 
 export const validate = (currentLink, links) => {
   const scheme = yup.string().required().url().notOneOf(links);
@@ -25,6 +25,26 @@ export const createFeeds = (document) => {
   return { feed, posts };
 };
 
+const createProxyUrl = (url) => {
+  const newProxyUrl = new URL('https://allorigins.hexlet.app');
+  newProxyUrl.pathname = '/get';
+  newProxyUrl.searchParams.append('url', url);
+  newProxyUrl.searchParams.append('disableCache', 'true');
+
+  return String(newProxyUrl.href);
+};
+
+export const getRssRequest = async (url) => {
+  try {
+    const { data } = await axios.get(createProxyUrl(url));
+    const { contents } = data;
+
+    return createFeeds(parse(contents));
+  } catch (error) {
+    throw Error(error.message);
+  }
+};
+
 const updatePosts = (newPosts, posts) => {
   const postsTitles = posts.map((post) => post.title);
   const diffPosts = newPosts.filter((post) => postsTitles.includes(post));
@@ -39,7 +59,7 @@ export const reloadRss = async (state) => {
   const { posts } = state;
   const requests = links.map((link) => getRssRequest(link));
 
-  Promise.all(requests)
+  await Promise.all(requests)
     .then((response) => {
       updatePosts(response, posts);
     })
@@ -49,4 +69,6 @@ export const reloadRss = async (state) => {
     .finally(() => {
       setTimeout(() => reloadRss(state), 5000);
     });
+
+  return requests;
 };

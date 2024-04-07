@@ -1,17 +1,33 @@
+export const renderPage = (elements, i18n) => {
+  const { t } = i18n;
+  const { main, form } = elements;
+
+  main.title.textContent = t('main.title');
+  main.text.textContent = t('main.text');
+  main.exampleLink.textContent = t('main.exampleLink');
+  form.button.textContent = t('form.button');
+  form.label.textContent = t('form.label');
+  form.urlInput.setAttribute('placeholder', t('form.placeholder'));
+};
+
 export const renderError = (elements, state, i18n) => {
-  elements.feedback.textContent = i18n.t(`${state.form.error}`);
-  elements.feedback.classList.remove('text-success');
-  elements.feedback.classList.add('text-danger');
-  elements.urlInput.classList.add('is-invalid');
+  const { feedback, urlInput } = elements.form;
+
+  feedback.textContent = i18n.t(`${state.form.error}`);
+  feedback.classList.remove('text-success');
+  feedback.classList.add('text-danger');
+  urlInput.classList.add('is-invalid');
 };
 
 export const renderSuccess = (elements, state, i18n) => {
-  elements.feedback.textContent = i18n.t('success.successLoaded');
-  elements.urlInput.classList.remove('is-invalid');
-  elements.feedback.classList.remove('text-danger');
-  elements.feedback.classList.add('text-success');
-  elements.urlInput.focus();
-  elements.form.reset();
+  const { form, feedback, urlInput } = elements.form;
+
+  feedback.textContent = i18n.t('success.successLoaded');
+  urlInput.classList.remove('is-invalid');
+  feedback.classList.remove('text-danger');
+  feedback.classList.add('text-success');
+  urlInput.focus();
+  form.reset();
   state.form.error = null;
   state.form.isValid = false;
 };
@@ -100,11 +116,12 @@ export const renderFeeds = (elements, feeds, i18n) => {
 export const renderModal = (elements, state, i18n) => {
   const { t } = i18n;
   const { title, description, link } = state.posts[state.modal.postId];
-  state.modal.postData = { title, description, link };
+  const { modal } = elements;
 
-  elements.modal.title.textContent = title;
-  elements.modal.text.textContent = description;
-  elements.modal.link.setAttribute('href', link);
-  elements.modal.link.textContent = t('modal.link');
-  elements.modal.button.textContent = t('modal.button');
+  state.modal.postData = { title, description, link };
+  modal.title.textContent = title;
+  modal.text.textContent = description;
+  modal.link.setAttribute('href', link);
+  modal.link.textContent = t('modal.link');
+  modal.button.textContent = t('modal.button');
 };
