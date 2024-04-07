@@ -65,7 +65,7 @@ export default async () => {
 
   window.addEventListener('DOMContentLoaded', () => renderPage(elements, i18n));
 
-  elements.form.form.addEventListener('submit', (event) => formSubmitHandler(event, watchedState));
+  elements.form.form.addEventListener('submit', (event) => formSubmitHandler(event, elements, watchedState));
 
   elements.posts.addEventListener('click', (event) => clickPostsHandler(event, watchedState));
 };

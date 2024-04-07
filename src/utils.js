@@ -69,6 +69,4 @@ export const reloadRss = async (state) => {
     .finally(() => {
       setTimeout(() => reloadRss(state), 5000);
     });
-
-  return requests;
 };

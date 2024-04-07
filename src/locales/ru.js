@@ -17,7 +17,7 @@ export default {
       required: 'Обязательное поле',
       invalidUrl: 'Ссылка должна быть валидным URL',
       duplicatedUrl: 'RSS уже существует',
-      networkError: 'Ошибка сети',
+      err_network: 'Ошибка сети',
     },
     posts: {
       title: 'Посты',

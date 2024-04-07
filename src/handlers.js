@@ -15,7 +15,7 @@ export const clickPostsHandler = (event, state) => {
   }
 };
 
-export const formSubmitHandler = async (event, state) => {
+export const formSubmitHandler = async (event, elements, state) => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const currentUrl = formData.get('url').trim();
@@ -36,5 +36,6 @@ export const formSubmitHandler = async (event, state) => {
     .catch((err) => {
       state.form.error = err.message;
       state.form.links = [];
+      elements.form.urlInput.focus();
     });
 };
