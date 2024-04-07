@@ -96,3 +96,15 @@ export const renderFeeds = (elements, feeds, i18n) => {
 
   elements.feeds.append(card);
 };
+
+export const renderModal = (elements, state, i18n) => {
+  const { t } = i18n;
+  const { title, description, link } = state.posts[state.modal.postId];
+  state.modal.postData = { title, description, link };
+
+  elements.modal.title.textContent = title;
+  elements.modal.text.textContent = description;
+  elements.modal.link.setAttribute('href', link);
+  elements.modal.link.textContent = t('modal.link');
+  elements.modal.button.textContent = t('modal.button');
+};

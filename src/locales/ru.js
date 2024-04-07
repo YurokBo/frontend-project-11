@@ -16,5 +16,9 @@ export default {
     feeds: {
       title: 'Фиды',
     },
+    modal: {
+      link: 'Читать полностью',
+      button: 'Закрыть',
+    },
   },
 };

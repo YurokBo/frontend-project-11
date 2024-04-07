@@ -2,6 +2,7 @@ import onChange from 'on-change';
 import {
   renderError,
   renderFeeds,
+  renderModal,
   renderPosts,
   renderSuccess,
 } from './renders.js';
@@ -22,6 +23,10 @@ export default (elements, state, i18n) => onChange(state, (path) => {
 
     case 'feeds':
       renderFeeds(elements, state.feeds, i18n);
+      break;
+
+    case 'modal.postId':
+      renderModal(elements, state, i18n);
       break;
 
     default:

@@ -22,6 +22,12 @@ export default async () => {
     feedback: document.querySelector('.feedback'),
     posts: document.querySelector('.posts'),
     feeds: document.querySelector('.feeds'),
+    modal: {
+      title: document.querySelector('.modal-title'),
+      text: document.querySelector('.modal-body'),
+      link: document.querySelector('.modal-footer a'),
+      button: document.querySelector('.modal-footer button'),
+    },
   };
   const state = {
     form: {
@@ -34,8 +40,8 @@ export default async () => {
     feeds: [],
     posts: [],
     modal: {
-      clickedPost: '',
-      clickedPostId: '',
+      postId: null,
+      postData: {},
     },
   };
 
@@ -74,5 +80,20 @@ export default async () => {
         watchedState.form.error = err.message;
         watchedState.form.links = [];
       });
+  });
+
+  elements.posts.addEventListener('click', (event) => {
+    const { target } = event;
+
+    if (target.nodeName === 'A') {
+      target.classList.replace('fw-bold', 'fw-normal');
+      target.classList.add('link-secondary');
+    }
+
+    if (target.nodeName === 'BUTTON') {
+      target.previousSibling.classList.replace('fw-bold', 'fw-normal');
+      target.previousSibling.classList.add('link-secondary');
+      watchedState.modal.postId = target.dataset.id;
+    }
   });
 };

@@ -16,5 +16,9 @@ export default {
     feeds: {
       title: 'Feeds',
     },
+    modal: {
+      link: 'Read completely',
+      button: 'Close',
+    },
   },
 };
