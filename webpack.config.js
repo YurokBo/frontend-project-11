@@ -9,7 +9,7 @@ const dirName = dirname(filename);
 const isProduction = process.env.NODE_ENV === 'production';
 
 const config = {
-  entry: './src/index.js',
+  entry: './index.js',
   output: {
     path: path.resolve(dirName, 'dist'),
   },
