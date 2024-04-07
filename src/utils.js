@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+// eslint-disable-next-line import/no-cycle
 import { getRssRequest } from './api.js';
 
 export const validate = (currentLink, links) => {

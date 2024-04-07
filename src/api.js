@@ -1,5 +1,6 @@
 import axios from 'axios';
 import parse from './parse.js';
+// eslint-disable-next-line import/no-cycle
 import { createFeeds } from './utils.js';
 
 const createProxyUrl = (url) => {
