@@ -11,9 +11,11 @@ const isProduction = process.env.NODE_ENV === 'production';
 const config = {
   entry: './index.js',
   output: {
+    filename: 'index.js',
     path: path.resolve(dirName, 'dist'),
   },
   devServer: {
+    static: path.resolve(dirName, 'dist'),
     open: true,
     host: 'localhost',
   },
