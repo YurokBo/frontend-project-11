@@ -81,19 +81,22 @@ export const renderPosts = (elements, posts, i18n) => {
 };
 
 export const renderFeeds = (elements, feeds, i18n) => {
+  elements.feeds.innerHTML = '';
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
+
   const cardBody = document.createElement('div');
   cardBody.classList.add('card-body');
+
   const cardTitle = document.createElement('h4');
   cardTitle.classList.add('card-title', 'h4');
   cardTitle.textContent = i18n.t('feeds.title');
   cardBody.append(cardTitle);
-  card.append(cardBody);
 
   const listGroup = document.createElement('ul');
   listGroup.classList.add('list-group', 'border-0', 'rounded-0');
-  card.append(listGroup);
+
+  card.append(cardBody, listGroup);
 
   feeds.forEach((feed) => {
     const listGroupItem = document.createElement('li');
@@ -103,11 +106,12 @@ export const renderFeeds = (elements, feeds, i18n) => {
     const feedTitle = document.createElement('h6');
     feedTitle.classList.add('h6', 'm-0');
     feedTitle.textContent = feed.title;
-    listGroupItem.append(feedTitle);
+
     const feedText = document.createElement('p');
     feedText.classList.add('m-0', 'small', 'text-black-50');
     feedText.textContent = feed.description;
-    listGroupItem.append(feedText);
+
+    listGroupItem.append(feedTitle, feedText);
   });
 
   elements.feeds.append(card);
