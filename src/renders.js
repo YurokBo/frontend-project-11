@@ -12,11 +12,32 @@ export const renderPage = (elements, i18n) => {
 
 export const renderError = (elements, state, i18n) => {
   const { feedback, urlInput } = elements.form;
+  const { t } = i18n;
 
-  feedback.textContent = i18n.t(`${state.form.error}`);
   feedback.classList.remove('text-success');
   feedback.classList.add('text-danger');
   urlInput.classList.add('is-invalid');
+
+  switch (state.form.error) {
+    case 'networkError':
+      feedback.textContent = t('errors.networkError');
+      break;
+
+    case 'parsingError':
+      feedback.textContent = t('errors.resourceInvalid');
+      break;
+
+    case 'url':
+      feedback.textContent = t('errors.invalidUrl');
+      break;
+
+    case 'notOneOf':
+      feedback.textContent = t('errors.duplicatedUrl');
+      break;
+
+    default:
+      throw new Error(`Unknown error type ${state.form.error}`);
+  }
 };
 
 export const renderSuccess = (elements, state, i18n) => {

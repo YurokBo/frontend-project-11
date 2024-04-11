@@ -1,5 +1,8 @@
 import * as yup from 'yup';
 import axios from 'axios';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { uniqueId } from 'lodash';
+// eslint-disable-next-line import/no-cycle
 import parse from './parse.js';
 
 export const validate = (currentLink, links) => {
@@ -15,8 +18,8 @@ export const createFeeds = (document) => {
   };
 
   const feedItems = document.querySelectorAll('item');
-  const posts = [...feedItems].map((feedItem, index) => ({
-    id: index,
+  const posts = [...feedItems].map((feedItem) => ({
+    id: uniqueId(),
     title: feedItem.querySelector('title').textContent,
     description: feedItem.querySelector('description').textContent,
     link: feedItem.querySelector('link').textContent,
@@ -39,9 +42,21 @@ export const getRssRequest = async (url) => {
     const { data } = await axios.get(createProxyUrl(url));
     const { contents } = data;
 
-    return createFeeds(parse(contents));
+    return parse(contents);
   } catch (error) {
-    throw Error(error.message);
+    if (error.name === 'parsingError') {
+      const parsingError = new Error();
+      parsingError.type = 'parsingError';
+      throw parsingError;
+    }
+
+    if (error.name === 'AxiosError') {
+      const networkError = new Error();
+      networkError.type = 'networkError';
+      throw networkError;
+    }
+
+    return error.name;
   }
 };
 
@@ -62,9 +77,6 @@ export const reloadRss = async (state) => {
   await Promise.all(requests)
     .then((response) => {
       updatePosts(response, posts);
-    })
-    .catch((error) => {
-      state.form.error = error.message;
     })
     .finally(() => {
       setTimeout(() => reloadRss(state), 5000);

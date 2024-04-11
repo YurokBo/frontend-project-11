@@ -18,6 +18,7 @@ export default {
       invalidUrl: 'This must be a valid URL',
       duplicatedUrl: 'RSS already exists',
       networkError: 'Network error',
+      resourceInvalid: 'Resource does not contain valid RSS',
     },
     posts: {
       title: 'Posts',

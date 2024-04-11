@@ -21,21 +21,18 @@ export const formSubmitHandler = async (event, elements, state) => {
   const currentUrl = formData.get('url').trim();
 
   await validate(currentUrl, state.form.links)
-    .then(() => {
-      state.form.isValid = true;
-      state.form.error = null;
-      state.form.links.push(currentUrl);
-      return getRssRequest(currentUrl);
-    })
+    .then(() => getRssRequest(currentUrl))
     .then((response) => {
       const { feed, posts } = response;
       state.feeds = [...state.feeds, feed];
       state.posts = [...state.posts, ...posts];
+      state.form.isValid = true;
+      state.form.error = null;
+      state.form.links.push(currentUrl);
       setTimeout(() => reloadRss(state), 5000);
     })
     .catch((err) => {
-      state.form.error = err.message;
-      state.form.links = [];
+      state.form.error = err.type;
       elements.form.urlInput.focus();
     });
 };
