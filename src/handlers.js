@@ -21,7 +21,10 @@ export const formSubmitHandler = async (event, elements, state) => {
   const currentUrl = formData.get('url').trim();
 
   await validate(currentUrl, state.form.links)
-    .then(() => getRssRequest(currentUrl))
+    .then(() => {
+      state.form.status = 'sending';
+      return getRssRequest(currentUrl);
+    })
     .then((response) => {
       const { feed, posts } = response;
       state.feeds = [...state.feeds, feed];
@@ -29,10 +32,13 @@ export const formSubmitHandler = async (event, elements, state) => {
       state.form.isValid = true;
       state.form.error = null;
       state.form.links.push(currentUrl);
+      state.form.status = 'sent';
       setTimeout(() => reloadRss(state), 5000);
     })
     .catch((err) => {
       state.form.error = err.type;
-      elements.form.urlInput.focus();
+    })
+    .finally(() => {
+      state.form.status = 'filling';
     });
 };

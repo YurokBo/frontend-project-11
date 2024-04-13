@@ -1,7 +1,7 @@
 import onChange from 'on-change';
 import {
   renderError,
-  renderFeeds,
+  renderFeeds, renderForm,
   renderModal,
   renderPosts,
   renderSuccess,
@@ -27,6 +27,10 @@ export default (elements, state, i18n) => onChange(state, (path) => {
 
     case 'modal.postId':
       renderModal(elements, state, i18n);
+      break;
+
+    case 'form.status':
+      renderForm(elements, state);
       break;
 
     default:

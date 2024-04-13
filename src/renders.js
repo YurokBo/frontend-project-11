@@ -17,6 +17,7 @@ export const renderError = (elements, state, i18n) => {
   feedback.classList.remove('text-success');
   feedback.classList.add('text-danger');
   urlInput.classList.add('is-invalid');
+  urlInput.focus();
 
   switch (state.form.error) {
     case 'networkError':
@@ -33,6 +34,10 @@ export const renderError = (elements, state, i18n) => {
 
     case 'notOneOf':
       feedback.textContent = t('errors.duplicatedUrl');
+      break;
+
+    case 'required':
+      feedback.textContent = t('errors.required');
       break;
 
     default:
@@ -149,4 +154,23 @@ export const renderModal = (elements, state, i18n) => {
   modal.link.setAttribute('href', link);
   modal.link.textContent = t('modal.link');
   modal.button.textContent = t('modal.button');
+};
+
+export const renderForm = (elements, state) => {
+  const { button } = elements.form;
+  const { status } = state.form;
+
+  switch (status) {
+    case 'filling':
+    case 'sent':
+      button.classList.remove('disabled');
+      break;
+
+    case 'sending':
+      button.classList.add('disabled');
+      break;
+
+    default:
+      throw new Error(`Unknoun status ${status}`);
+  }
 };
