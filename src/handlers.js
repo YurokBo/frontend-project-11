@@ -1,16 +1,15 @@
 import { reloadRss, validate, getRssRequest } from './utils.js';
+import { renderClickedPost } from './renders.js';
 
 export const clickPostsHandler = (event, state) => {
   const { target } = event;
 
   if (target.nodeName === 'A') {
-    target.classList.replace('fw-bold', 'fw-normal');
-    target.classList.add('link-secondary');
+    renderClickedPost(target);
   }
 
   if (target.nodeName === 'BUTTON') {
-    target.previousSibling.classList.replace('fw-bold', 'fw-normal');
-    target.previousSibling.classList.add('link-secondary');
+    renderClickedPost(target.previousSibling);
     state.modal.postId = target.dataset.id;
   }
 };

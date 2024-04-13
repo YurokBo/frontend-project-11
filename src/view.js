@@ -18,6 +18,7 @@ export default (elements, state, i18n) => onChange(state, (path) => {
       break;
 
     case 'posts':
+    case 'form.links':
       renderPosts(elements, state.posts, i18n);
       break;
 
@@ -34,6 +35,6 @@ export default (elements, state, i18n) => onChange(state, (path) => {
       break;
 
     default:
-      break;
+      throw new Error(`Unknown event ${path}`);
   }
 });

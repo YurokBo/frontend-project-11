@@ -145,7 +145,8 @@ export const renderFeeds = (elements, feeds, i18n) => {
 
 export const renderModal = (elements, state, i18n) => {
   const { t } = i18n;
-  const { title, description, link } = state.posts[state.modal.postId];
+  const post = state.posts.find(({ id }) => id === state.modal.postId);
+  const { title, description, link } = post;
   const { modal } = elements;
 
   state.modal.postData = { title, description, link };
@@ -173,4 +174,9 @@ export const renderForm = (elements, state) => {
     default:
       throw new Error(`Unknoun status ${status}`);
   }
+};
+
+export const renderClickedPost = (targetElement) => {
+  targetElement.classList.replace('fw-bold', 'fw-normal');
+  targetElement.classList.add('link-secondary');
 };
