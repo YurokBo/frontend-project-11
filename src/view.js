@@ -18,12 +18,14 @@ export default (elements, state, i18n) => onChange(state, (path) => {
       break;
 
     case 'posts':
+      renderPosts(elements, state, i18n);
+      break;
+
     case 'form.links':
-      renderPosts(elements, state.posts, i18n);
       break;
 
     case 'feeds':
-      renderFeeds(elements, state.feeds, i18n);
+      renderFeeds(elements, state, i18n);
       break;
 
     case 'modal.postIds':

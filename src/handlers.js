@@ -1,5 +1,6 @@
 import * as yup from 'yup';
-import { reloadRss, getRssRequest } from './utils.js';
+// eslint-disable-next-line import/named
+import { reloadRss, getRssRequest, DELAY_RELOAD_RSS } from './utils.js';
 import { renderClickedPost } from './renders.js';
 
 export const clickPostsHandler = (event, state) => {
@@ -38,7 +39,7 @@ export const formSubmitHandler = async (event, elements, state) => {
       state.form.error = null;
       state.form.links.push(currentUrl);
       state.form.status = 'sent';
-      setTimeout(() => reloadRss(state), 5000);
+      setTimeout(() => reloadRss(state), DELAY_RELOAD_RSS);
     })
     .catch((err) => {
       state.form.error = err.type;

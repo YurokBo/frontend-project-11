@@ -1,6 +1,8 @@
 import axios from 'axios';
 import parse from './parse.js';
 
+export const DELAY_RELOAD_RSS = 5000;
+
 const createProxyUrl = (url) => {
   const newProxyUrl = new URL('https://allorigins.hexlet.app');
   newProxyUrl.pathname = '/get';
@@ -33,12 +35,11 @@ export const getRssRequest = async (url) => {
   }
 };
 
-const updatePosts = (response, posts) => {
-  const newPosts = response.posts;
-  const loadedPostsTitles = [];
+const updatePosts = (newPosts, posts) => {
+  const postsTitles = [];
 
-  posts.forEach((post) => loadedPostsTitles.push(post.title));
-  const diffPosts = newPosts.filter((post) => !loadedPostsTitles.includes(post.title));
+  posts.forEach((post) => postsTitles.push(post.title));
+  const diffPosts = newPosts.filter((post) => !postsTitles.includes(post.title));
 
   if (diffPosts.length !== 0) {
     diffPosts.forEach((diffPost) => posts.push(diffPost));
@@ -52,9 +53,9 @@ export const reloadRss = async (state) => {
 
   await Promise.all(requests)
     .then((responses) => {
-      responses.forEach((response) => updatePosts(response, posts));
+      responses.forEach((response) => updatePosts(response.posts, posts));
     })
     .finally(() => {
-      setTimeout(() => reloadRss(state), 5000);
+      setTimeout(() => reloadRss(state), DELAY_RELOAD_RSS);
     });
 };
