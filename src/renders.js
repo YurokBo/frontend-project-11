@@ -58,7 +58,7 @@ export const renderSuccess = (elements, state, i18n) => {
   state.form.isValid = false;
 };
 
-export const renderPosts = (elements, posts, i18n) => {
+export const renderPosts = (elements, state, i18n) => {
   elements.posts.innerHTML = '';
   const { t } = i18n;
 
@@ -76,7 +76,7 @@ export const renderPosts = (elements, posts, i18n) => {
   listGroup.classList.add('list-group', 'border-0', 'rounded-0');
   card.append(listGroup);
 
-  posts.forEach((post) => {
+  state.posts.forEach((post) => {
     const listGroupItem = document.createElement('li');
     listGroupItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
 
@@ -106,7 +106,7 @@ export const renderPosts = (elements, posts, i18n) => {
   elements.posts.append(card);
 };
 
-export const renderFeeds = (elements, feeds, i18n) => {
+export const renderFeeds = (elements, state, i18n) => {
   elements.feeds.innerHTML = '';
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
@@ -124,7 +124,7 @@ export const renderFeeds = (elements, feeds, i18n) => {
 
   card.append(cardBody, listGroup);
 
-  feeds.forEach((feed) => {
+  state.feeds.forEach((feed) => {
     const listGroupItem = document.createElement('li');
     listGroupItem.classList.add('list-group-item', 'border-0', 'border-end-0');
     listGroup.append(listGroupItem);
