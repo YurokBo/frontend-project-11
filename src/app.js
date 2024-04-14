@@ -46,7 +46,7 @@ export default async () => {
     feeds: [],
     posts: [],
     modal: {
-      postId: null,
+      postIds: [],
       postData: {},
     },
   };

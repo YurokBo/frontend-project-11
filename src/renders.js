@@ -145,7 +145,7 @@ export const renderFeeds = (elements, feeds, i18n) => {
 
 export const renderModal = (elements, state, i18n) => {
   const { t } = i18n;
-  const post = state.posts.find(({ id }) => id === state.modal.postId);
+  const post = state.posts.find(({ id }) => state.modal.postIds.includes(id));
   const { title, description, link } = post;
   const { modal } = elements;
 

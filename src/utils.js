@@ -1,32 +1,5 @@
-import * as yup from 'yup';
 import axios from 'axios';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { uniqueId } from 'lodash';
-// eslint-disable-next-line import/no-cycle
 import parse from './parse.js';
-
-export const validate = (currentLink, links) => {
-  const scheme = yup.string().required().url().notOneOf(links);
-  return scheme.validate(currentLink);
-};
-
-export const createFeeds = (document) => {
-  const feed = {
-    title: document.querySelector('title').textContent,
-    description: document.querySelector('description').textContent,
-    link: document.querySelector('link').textContent,
-  };
-
-  const feedItems = document.querySelectorAll('item');
-  const posts = [...feedItems].map((feedItem) => ({
-    id: uniqueId(),
-    title: feedItem.querySelector('title').textContent,
-    description: feedItem.querySelector('description').textContent,
-    link: feedItem.querySelector('link').textContent,
-  }));
-
-  return { feed, posts };
-};
 
 const createProxyUrl = (url) => {
   const newProxyUrl = new URL('https://allorigins.hexlet.app');
@@ -60,12 +33,15 @@ export const getRssRequest = async (url) => {
   }
 };
 
-const updatePosts = (newPosts, posts) => {
-  const postsTitles = posts.map((post) => post.title);
-  const diffPosts = newPosts.filter((post) => postsTitles.includes(post));
+const updatePosts = (response, posts) => {
+  const newPosts = response.posts;
+  const loadedPostsTitles = [];
 
-  if (diffPosts.length) {
-    diffPosts.map((post) => posts.push(post));
+  posts.forEach((post) => loadedPostsTitles.push(post.title));
+  const diffPosts = newPosts.filter((post) => !loadedPostsTitles.includes(post.title));
+
+  if (diffPosts.length !== 0) {
+    diffPosts.forEach((diffPost) => posts.push(diffPost));
   }
 };
 
@@ -75,8 +51,8 @@ export const reloadRss = async (state) => {
   const requests = links.map((link) => getRssRequest(link));
 
   await Promise.all(requests)
-    .then((response) => {
-      updatePosts(response, posts);
+    .then((responses) => {
+      responses.forEach((response) => updatePosts(response, posts));
     })
     .finally(() => {
       setTimeout(() => reloadRss(state), 5000);

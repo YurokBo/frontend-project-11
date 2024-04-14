@@ -1,4 +1,5 @@
-import { reloadRss, validate, getRssRequest } from './utils.js';
+import * as yup from 'yup';
+import { reloadRss, getRssRequest } from './utils.js';
 import { renderClickedPost } from './renders.js';
 
 export const clickPostsHandler = (event, state) => {
@@ -10,8 +11,13 @@ export const clickPostsHandler = (event, state) => {
 
   if (target.nodeName === 'BUTTON') {
     renderClickedPost(target.previousSibling);
-    state.modal.postId = target.dataset.id;
+    state.modal.postIds.push(target.dataset.id);
   }
+};
+
+const validate = (currentLink, links) => {
+  const scheme = yup.string().required().url().notOneOf(links);
+  return scheme.validate(currentLink);
 };
 
 export const formSubmitHandler = async (event, elements, state) => {
