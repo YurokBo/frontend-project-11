@@ -158,17 +158,19 @@ export const renderModal = (elements, state, i18n) => {
 };
 
 export const renderForm = (elements, state) => {
-  const { button } = elements.form;
+  const { button, urlInput } = elements.form;
   const { status } = state.form;
 
   switch (status) {
     case 'filling':
     case 'sent':
       button.classList.remove('disabled');
+      urlInput.removeAttribute('disabled');
       break;
 
     case 'sending':
       button.classList.add('disabled');
+      urlInput.setAttribute('disabled', true);
       break;
 
     default:

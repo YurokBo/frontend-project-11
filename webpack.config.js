@@ -9,7 +9,7 @@ const dirName = dirname(filename);
 const isProduction = process.env.NODE_ENV === 'production';
 
 const config = {
-  entry: './index.js',
+  entry: './src/index.js',
   output: {
     filename: 'index.js',
     path: path.resolve(dirName, 'dist'),
@@ -21,7 +21,7 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html',
+      template: 'src/index.html',
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
