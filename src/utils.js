@@ -12,13 +12,12 @@ const createProxyUrl = (url) => {
   return String(newProxyUrl.href);
 };
 
-export const getRssRequest = async (url) => {
-  try {
-    const { data } = await axios.get(createProxyUrl(url));
+export const getRssRequest = (url) => axios.get(createProxyUrl(url))
+  .then(({ data }) => {
     const { contents } = data;
-
     return parse(contents);
-  } catch (error) {
+  })
+  .catch((error) => {
     if (error.name === 'parsingError') {
       const parsingError = new Error();
       parsingError.type = 'parsingError';
@@ -32,8 +31,7 @@ export const getRssRequest = async (url) => {
     }
 
     return error.name;
-  }
-};
+  });
 
 const updatePosts = (newPosts, posts) => {
   const postsTitles = [];
@@ -46,12 +44,12 @@ const updatePosts = (newPosts, posts) => {
   }
 };
 
-export const reloadRss = async (state) => {
+export const reloadRss = (state) => {
   const { links } = state.form;
   const { posts } = state;
   const requests = links.map((link) => getRssRequest(link));
 
-  await Promise.all(requests)
+  Promise.all(requests)
     .then((responses) => {
       responses.forEach((response) => updatePosts(response.posts, posts));
     })

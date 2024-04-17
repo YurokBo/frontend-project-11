@@ -5,10 +5,10 @@ import resources from './locales/index.js';
 import { renderPage } from './renders.js';
 import { clickPostsHandler, formSubmitHandler } from './handlers.js';
 
-export default async () => {
+export default () => {
   const defaultLanguage = 'ru';
   const i18n = i18next.createInstance();
-  await i18n.init({
+  i18n.init({
     lng: defaultLanguage,
     debug: false,
     resources,

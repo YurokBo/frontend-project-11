@@ -21,16 +21,16 @@ const validate = (currentLink, links) => {
   return scheme.validate(currentLink);
 };
 
-export const formSubmitHandler = async (event, elements, state) => {
+export const formSubmitHandler = (event, elements, state) => {
   event.preventDefault();
+
   const formData = new FormData(event.target);
   const currentUrl = formData.get('url').trim();
 
-  await validate(currentUrl, state.form.links)
-    .then(() => {
-      state.form.status = 'sending';
-      return getRssRequest(currentUrl);
-    })
+  state.form.status = 'sending';
+
+  validate(currentUrl, state.form.links)
+    .then(() => getRssRequest(currentUrl))
     .then((response) => {
       const { feed, posts } = response;
       state.feeds = [...state.feeds, feed];
@@ -43,8 +43,6 @@ export const formSubmitHandler = async (event, elements, state) => {
     })
     .catch((err) => {
       state.form.error = err.type;
-    })
-    .finally(() => {
-      state.form.status = 'filling';
+      state.form.status = 'error';
     });
 };

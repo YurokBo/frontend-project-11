@@ -164,6 +164,7 @@ export const renderForm = (elements, state) => {
   switch (status) {
     case 'filling':
     case 'sent':
+    case 'error':
       button.classList.remove('disabled');
       urlInput.removeAttribute('disabled');
       break;
