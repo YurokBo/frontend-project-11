@@ -37,7 +37,7 @@ export const getRssRequest = (url) => axios.get(createProxyUrl(url))
     return createFeeds(parse(contents));
   })
   .catch((error) => {
-    if (error.name === 'parsingError') {
+    if (error.name === 'parsingError' || error.name === 'TypeError') {
       const parsingError = new Error();
       parsingError.type = 'parsingError';
       throw parsingError;
