@@ -45,7 +45,7 @@ export const renderError = (elements, state, i18n) => {
   }
 };
 
-export const renderSuccess = (elements, state, i18n) => {
+export const renderSuccess = (elements, i18n) => {
   const { form, feedback, urlInput } = elements.form;
 
   feedback.textContent = i18n.t('success.successLoaded');
@@ -54,8 +54,6 @@ export const renderSuccess = (elements, state, i18n) => {
   feedback.classList.add('text-success');
   urlInput.focus();
   form.reset();
-  state.form.error = null;
-  state.form.isValid = false;
 };
 
 export const renderPosts = (elements, state, i18n) => {

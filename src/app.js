@@ -48,6 +48,7 @@ export default () => {
         postIds: [],
         postData: {},
       },
+      clickPostTargetElement: null,
     };
 
     const watchedState = view(elements, state, i18n);

@@ -1,5 +1,6 @@
 import onChange from 'on-change';
 import {
+  renderClickedPost,
   renderError,
   renderFeeds, renderForm,
   renderModal,
@@ -14,7 +15,7 @@ export default (elements, state, i18n) => onChange(state, (path) => {
       break;
 
     case 'form.isValid':
-      renderSuccess(elements, state, i18n);
+      renderSuccess(elements, i18n);
       break;
 
     case 'posts':
@@ -34,6 +35,10 @@ export default (elements, state, i18n) => onChange(state, (path) => {
 
     case 'form.status':
       renderForm(elements, state);
+      break;
+
+    case 'clickPostTargetElement':
+      renderClickedPost(state.clickPostTargetElement);
       break;
 
     default:
