@@ -29,7 +29,7 @@ export const formSubmitHandler = (event, elements, state) => {
 
   state.form.status = 'sending';
 
-  validate(currentUrl, state.form.links)
+  validate(currentUrl, state.rssLinks)
     .then(() => getRssRequest(currentUrl))
     .then((response) => {
       const { feed, posts } = response;
@@ -37,8 +37,8 @@ export const formSubmitHandler = (event, elements, state) => {
       state.posts = [...state.posts, ...posts];
       state.form.isValid = true;
       state.form.error = null;
-      state.form.links.push(currentUrl);
-      state.form.status = 'sent';
+      state.rssLinks.push(currentUrl);
+      state.form.status = 'success';
     })
     .catch((err) => {
       state.form.error = err.type;

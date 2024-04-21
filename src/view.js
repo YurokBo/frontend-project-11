@@ -21,7 +21,7 @@ export default (elements, state, i18n) => onChange(state, (path) => {
       renderPosts(elements, state, i18n);
       break;
 
-    case 'form.links':
+    case 'rssLinks':
       break;
 
     case 'feeds':

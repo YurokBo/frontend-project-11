@@ -64,11 +64,10 @@ const updatePosts = (newPosts, posts) => {
 };
 
 export const reloadRss = (state) => {
-  const { links } = state.form;
-  const { posts } = state;
+  const { rssLinks, posts } = state;
 
   setTimeout(() => {
-    const requests = links.map((link) => getRssRequest(link));
+    const requests = rssLinks.map((link) => getRssRequest(link));
     Promise.all(requests)
       .then((responses) => {
         responses.forEach((response) => updatePosts(response.posts, posts));

@@ -39,10 +39,9 @@ export default () => {
       form: {
         isValid: false,
         error: null,
-        links: [],
         formStatus: 'filling',
-        success: null,
       },
+      rssLinks: [],
       feeds: [],
       posts: [],
       modal: {
