@@ -1,26 +1,7 @@
 import axios from 'axios';
-import { uniqueId } from 'lodash';
 import parse from './parse.js';
 
 export const DELAY_RELOAD_RSS = 5000;
-
-const createFeeds = (document) => {
-  const feed = {
-    title: document.querySelector('title').textContent,
-    description: document.querySelector('description').textContent,
-    link: document.querySelector('link').textContent,
-  };
-
-  const feedItems = document.querySelectorAll('item');
-  const posts = [...feedItems].map((feedItem) => ({
-    id: uniqueId(),
-    title: feedItem.querySelector('title').textContent,
-    description: feedItem.querySelector('description').textContent,
-    link: feedItem.querySelector('link').textContent,
-  }));
-
-  return { feed, posts };
-};
 
 const createProxyUrl = (url) => {
   const newProxyUrl = new URL('https://allorigins.hexlet.app');
@@ -34,7 +15,7 @@ const createProxyUrl = (url) => {
 export const getRssRequest = (url) => axios.get(createProxyUrl(url))
   .then(({ data }) => {
     const { contents } = data;
-    return createFeeds(parse(contents));
+    return parse(contents);
   })
   .catch((error) => {
     if (error.name === 'parsingError' || error.name === 'TypeError') {
