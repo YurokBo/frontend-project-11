@@ -70,6 +70,6 @@ export default () => {
 
     elements.posts.addEventListener('click', (event) => clickPostsHandler(event, watchedState));
 
-    reloadRss(state);
+    reloadRss(watchedState);
   });
 };
