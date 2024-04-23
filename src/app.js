@@ -4,6 +4,7 @@ import view from './view.js';
 import resources from './locales/index.js';
 import { renderPage } from './renders.js';
 import { clickPostsHandler, formSubmitHandler } from './handlers.js';
+import { reloadRss } from './utils.js';
 
 export default () => {
   const defaultLanguage = 'ru';
@@ -68,5 +69,7 @@ export default () => {
     elements.form.form.addEventListener('submit', (event) => formSubmitHandler(event, elements, watchedState));
 
     elements.posts.addEventListener('click', (event) => clickPostsHandler(event, watchedState));
+
+    reloadRss(state);
   });
 };

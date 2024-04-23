@@ -1,6 +1,5 @@
 import * as yup from 'yup';
-// eslint-disable-next-line import/named
-import { reloadRss, getRssRequest } from './utils.js';
+import { getRssRequest } from './utils.js';
 
 export const clickPostsHandler = (event, state) => {
   const { target } = event;
@@ -45,6 +44,4 @@ export const formSubmitHandler = (event, elements, state) => {
       state.form.error = err.type;
       state.form.status = 'error';
     });
-
-  reloadRss(state);
 };
