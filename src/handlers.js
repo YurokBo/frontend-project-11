@@ -10,7 +10,7 @@ export const clickPostsHandler = (event, state) => {
 
   if (target.nodeName === 'BUTTON') {
     state.clickPostTargetElement = target.previousSibling;
-    state.modal.postIds.push(target.dataset.id);
+    state.postIds.push(target.dataset.id);
   }
 };
 
@@ -34,7 +34,6 @@ export const formSubmitHandler = (event, elements, state) => {
       state.feeds = [...state.feeds, feed];
       state.posts = [...state.posts, ...posts];
       state.form.isValid = true;
-      state.form.error = null;
       state.rssLinks.push(currentUrl);
       state.form.status = 'success';
       state.form.error = null;

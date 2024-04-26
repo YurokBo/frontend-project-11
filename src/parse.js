@@ -1,5 +1,3 @@
-import { uniqueId } from 'lodash';
-
 export default (data) => {
   try {
     const domParser = new DOMParser();
@@ -13,7 +11,6 @@ export default (data) => {
 
     const feedItems = parsedDom.querySelectorAll('item');
     const posts = [...feedItems].map((feedItem) => ({
-      id: uniqueId(),
       title: feedItem.querySelector('title').textContent,
       description: feedItem.querySelector('description').textContent,
       link: feedItem.querySelector('link').textContent,

@@ -45,10 +45,7 @@ export default () => {
       rssLinks: [],
       feeds: [],
       posts: [],
-      modal: {
-        postIds: [],
-        postData: {},
-      },
+      postIds: [],
       clickPostTargetElement: null,
     };
 

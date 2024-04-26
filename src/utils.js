@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { uniqueId } from 'lodash';
 import parse from './parse.js';
 
 export const DELAY_RELOAD_RSS = 5000;
@@ -15,7 +16,13 @@ const createProxyUrl = (url) => {
 export const getRssRequest = (url) => axios.get(createProxyUrl(url))
   .then(({ data }) => {
     const { contents } = data;
-    return parse(contents);
+    const parsedContents = parse(contents);
+
+    parsedContents.posts.forEach((post) => {
+      post.id = uniqueId();
+    });
+
+    return parsedContents;
   })
   .catch((error) => {
     if (error.name === 'parsingError' || error.name === 'TypeError') {

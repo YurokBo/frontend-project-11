@@ -29,7 +29,7 @@ export default (elements, state, i18n) => onChange(state, (path) => {
       renderFeeds(elements, state, i18n);
       break;
 
-    case 'modal.postIds':
+    case 'postIds':
       renderModal(elements, state, i18n);
       break;
 

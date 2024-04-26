@@ -143,11 +143,10 @@ export const renderFeeds = (elements, state, i18n) => {
 
 export const renderModal = (elements, state, i18n) => {
   const { t } = i18n;
-  const post = state.posts.find(({ id }) => state.modal.postIds.includes(id));
+  const post = state.posts.find(({ id }) => state.postIds.includes(id));
   const { title, description, link } = post;
   const { modal } = elements;
 
-  state.modal.postData = { title, description, link };
   modal.title.textContent = title;
   modal.text.textContent = description;
   modal.link.setAttribute('href', link);
