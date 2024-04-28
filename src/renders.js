@@ -18,8 +18,6 @@ export const renderError = (elements, state, i18n) => {
   const { feedback, urlInput } = elements.form;
   const { t } = i18n;
 
-  console.log('renderError');
-
   feedback.classList.remove('text-success');
   feedback.classList.add('text-danger');
   urlInput.classList.add('is-invalid');
@@ -52,7 +50,6 @@ export const renderError = (elements, state, i18n) => {
 };
 
 export const renderSuccess = (elements, i18n) => {
-  console.log('renderSuccess');
   const { form, feedback, urlInput } = elements.form;
 
   feedback.textContent = i18n.t('success.successLoaded');
