@@ -10,18 +10,15 @@ export default (data) => {
     throw err;
   }
 
-  const feed = {
-    title: parsedDom.querySelector('title').textContent,
-    description: parsedDom.querySelector('description').textContent,
-    link: parsedDom.querySelector('link').textContent,
+  const title = parsedDom.querySelector('title').textContent;
+  const description = parsedDom.querySelector('description').textContent;
+  const link = parsedDom.querySelector('link').textContent;
+  const items = parsedDom.querySelectorAll('item');
+
+  return {
+    title,
+    description,
+    link,
+    items,
   };
-
-  const feedItems = parsedDom.querySelectorAll('item');
-  const posts = [...feedItems].map((feedItem) => ({
-    title: feedItem.querySelector('title').textContent,
-    description: feedItem.querySelector('description').textContent,
-    link: feedItem.querySelector('link').textContent,
-  }));
-
-  return { feed, posts };
 };

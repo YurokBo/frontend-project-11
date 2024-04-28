@@ -16,13 +16,22 @@ const createProxyUrl = (url) => {
 export const getRssRequest = (url) => axios.get(createProxyUrl(url))
   .then(({ data }) => {
     const { contents } = data;
-    const parsedContents = parse(contents);
+    const {
+      title,
+      description,
+      link,
+      items,
+    } = parse(contents);
 
-    parsedContents.posts.forEach((post) => {
-      post.id = uniqueId();
-    });
+    const feed = { title, description, link };
+    const posts = [...items].map((feedItem) => ({
+      title: feedItem.querySelector('title').textContent,
+      description: feedItem.querySelector('description').textContent,
+      link: feedItem.querySelector('link').textContent,
+      postId: uniqueId(),
+    }));
 
-    return parsedContents;
+    return { feed, posts };
   })
   .catch((error) => {
     if (error.name === 'parsingError' || error.name === 'TypeError') {
