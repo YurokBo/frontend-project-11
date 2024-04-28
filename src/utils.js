@@ -28,7 +28,7 @@ export const getRssRequest = (url) => axios.get(createProxyUrl(url))
       title: feedItem.querySelector('title').textContent,
       description: feedItem.querySelector('description').textContent,
       link: feedItem.querySelector('link').textContent,
-      postId: uniqueId(),
+      id: uniqueId(),
     }));
 
     return { feed, posts };
