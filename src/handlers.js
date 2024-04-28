@@ -27,14 +27,14 @@ export const formSubmitHandler = (event, elements, state) => {
 
   state.form.status = 'sending';
 
-  validate(currentUrl, state.rssLinks)
+  validate(currentUrl, state.feeds.feedsLinks)
     .then(() => getRssRequest(currentUrl))
     .then((response) => {
       const { feed, posts } = response;
-      state.feeds = [...state.feeds, feed];
+      state.feeds.feedsContent = [...state.feeds.feedsContent, feed];
       state.posts = [...state.posts, ...posts];
       state.form.isValid = true;
-      state.rssLinks.push(currentUrl);
+      state.feeds.feedsLinks.push(currentUrl);
       state.form.status = 'success';
       state.form.error = null;
       state.form.isValid = false;

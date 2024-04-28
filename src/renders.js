@@ -122,7 +122,7 @@ export const renderFeeds = (elements, state, i18n) => {
 
   card.append(cardBody, listGroup);
 
-  state.feeds.forEach((feed) => {
+  state.feeds.feedsContent.forEach((feed) => {
     const listGroupItem = document.createElement('li');
     listGroupItem.classList.add('list-group-item', 'border-0', 'border-end-0');
     listGroup.append(listGroupItem);

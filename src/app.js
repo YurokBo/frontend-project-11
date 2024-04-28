@@ -43,7 +43,10 @@ export default () => {
         formStatus: 'filling',
       },
       rssLinks: [],
-      feeds: [],
+      feeds: {
+        feedsContent: [],
+        feedsLinks: [],
+      },
       posts: [],
       postIds: [],
       clickPostTargetElement: null,

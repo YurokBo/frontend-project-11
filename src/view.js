@@ -2,7 +2,8 @@ import onChange from 'on-change';
 import {
   renderClickedPost,
   renderError,
-  renderFeeds, renderForm,
+  renderFeeds,
+  renderForm,
   renderModal,
   renderPosts,
   renderSuccess,
@@ -22,10 +23,10 @@ export default (elements, state, i18n) => onChange(state, (path) => {
       renderPosts(elements, state, i18n);
       break;
 
-    case 'rssLinks':
+    case 'feeds.feedsLinks':
       break;
 
-    case 'feeds':
+    case 'feeds.feedsContent':
       renderFeeds(elements, state, i18n);
       break;
 
