@@ -38,7 +38,6 @@ export default () => {
     };
     const state = {
       form: {
-        isValid: false,
         error: null,
         formStatus: 'filling',
       },

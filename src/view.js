@@ -1,24 +1,14 @@
 import onChange from 'on-change';
 import {
   renderClickedPost,
-  renderError,
   renderFeeds,
   renderForm,
   renderModal,
   renderPosts,
-  renderSuccess,
 } from './renders.js';
 
 export default (elements, state, i18n) => onChange(state, (path) => {
   switch (path) {
-    case 'form.error':
-      renderError(elements, state, i18n);
-      break;
-
-    case 'form.isValid':
-      renderSuccess(elements, i18n);
-      break;
-
     case 'posts':
       renderPosts(elements, state, i18n);
       break;
@@ -35,7 +25,8 @@ export default (elements, state, i18n) => onChange(state, (path) => {
       break;
 
     case 'form.status':
-      renderForm(elements, state);
+    case 'form.error':
+      renderForm(elements, state, i18n);
       break;
 
     case 'clickPostTargetElement':

@@ -11,8 +11,14 @@ export const renderPage = (elements, i18n) => {
 };
 
 export const renderError = (elements, state, i18n) => {
+  if (!state.form.error) {
+    return;
+  }
+
   const { feedback, urlInput } = elements.form;
   const { t } = i18n;
+
+  console.log('renderError');
 
   feedback.classList.remove('text-success');
   feedback.classList.add('text-danger');
@@ -46,6 +52,7 @@ export const renderError = (elements, state, i18n) => {
 };
 
 export const renderSuccess = (elements, i18n) => {
+  console.log('renderSuccess');
   const { form, feedback, urlInput } = elements.form;
 
   feedback.textContent = i18n.t('success.successLoaded');
@@ -54,6 +61,7 @@ export const renderSuccess = (elements, i18n) => {
   feedback.classList.add('text-success');
   urlInput.focus();
   form.reset();
+  urlInput.value = '';
 };
 
 export const renderPosts = (elements, state, i18n) => {
@@ -154,16 +162,23 @@ export const renderModal = (elements, state, i18n) => {
   modal.button.textContent = t('modal.button');
 };
 
-export const renderForm = (elements, state) => {
+export const renderForm = (elements, state, i18n) => {
   const { button, urlInput } = elements.form;
   const { status } = state.form;
 
   switch (status) {
     case 'filling':
-    case 'success':
     case 'error':
       button.classList.remove('disabled');
       urlInput.removeAttribute('disabled');
+      renderError(elements, state, i18n);
+      break;
+
+    case 'success':
+      button.classList.remove('disabled');
+      urlInput.removeAttribute('disabled');
+      urlInput.value = '';
+      renderSuccess(elements, i18n);
       break;
 
     case 'sending':
