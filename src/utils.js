@@ -24,10 +24,8 @@ export const getRssRequest = (url) => axios.get(createProxyUrl(url))
     } = parse(contents);
 
     const feed = { title, description, link };
-    const posts = [...items].map((feedItem) => ({
-      title: feedItem.querySelector('title').textContent,
-      description: feedItem.querySelector('description').textContent,
-      link: feedItem.querySelector('link').textContent,
+    const posts = items.map((post) => ({
+      ...post,
       id: uniqueId(),
     }));
 
